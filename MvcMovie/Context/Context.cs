@@ -18,6 +18,7 @@ namespace MvcMovie.Context
             public DbSet<Movie> Movies { get; set; }
               public DbSet<Copies> Copies { get; set; }
           public DbSet<Client> Clients { get; set; }
+        public DbSet<Lloguer> Lloguers { get; set; }
 
 
 

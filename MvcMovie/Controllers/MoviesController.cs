@@ -147,6 +147,137 @@ namespace MvcMovie.Controllers
             
         }
 
+
+        /*public ActionResult Index2(string movieGenre, string searchString, string searchString2, string sortOrder, string currentFilter, int? page)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.IDsortParm = String.IsNullOrEmpty(sortOrder) ? "id" : "";
+            ViewBag.TitolsortParm = sortOrder == "Titol" ? "titol_desc" : "Titol";
+            ViewBag.DatasortParm = sortOrder == "Data" ? "data_desc" : "Data";
+            ViewBag.GeneresortParm = sortOrder == "Genere" ? "data_desc" : "Genere";
+            ViewBag.PreusortParm = sortOrder == "Preu" ? "preu_desc" : "Preu";
+            ViewBag.IMDBsortParm = sortOrder == "IMDB" ? "imdb_desc" : "IMDB";
+            ViewBag.DuradasortParm = sortOrder == "Durada" ? "durada_desc" : "Durada";
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            var GenreLst = new List<string>();
+
+            var GenreQry = from d in db.Movies
+                           orderby d.Genere
+                           select d.Genere;
+
+            GenreLst.AddRange(GenreQry.Distinct());
+            ViewBag.movieGenre = new SelectList(GenreLst);
+
+            var movies = from m in db.Movies
+                         select m;
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(s => s.Titol.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(searchString2))
+            {
+                int temp = int.Parse(searchString2);
+                movies = movies.Where(i => i.IMDB.Equals(temp));
+            }
+
+            if (!string.IsNullOrEmpty(movieGenre))
+            {
+                movies = movies.Where(x => x.Genere == movieGenre);
+            }
+
+            switch (sortOrder)
+            {
+                case "id":
+                    movies = movies.OrderByDescending(i => i.ID);
+                    break;
+
+                case "Titol":
+                    movies = movies.OrderBy(i => i.Titol);
+                    break;
+                case "titol_desc":
+                    movies = movies.OrderByDescending(i => i.Titol);
+                    break;
+
+                case "Data":
+                    movies = movies.OrderBy(i => i.DataEstrena);
+                    break;
+                case "data_desc":
+                    movies = movies.OrderByDescending(i => i.DataEstrena);
+                    break;
+
+                case "Genere":
+                    movies = movies.OrderBy(i => i.Genere);
+                    break;
+                case "genere_desc":
+                    movies = movies.OrderByDescending(i => i.Genere);
+                    break;
+
+                case "Preu":
+                    movies = movies.OrderBy(i => i.Preu);
+                    break;
+                case "preu_desc":
+                    movies = movies.OrderByDescending(i => i.Preu);
+                    break;
+
+                case "IMDB":
+                    movies = movies.OrderBy(i => i.IMDB);
+                    break;
+                case "IMDB_desc":
+                    movies = movies.OrderByDescending(i => i.IMDB);
+                    break;
+
+                case "Durada":
+                    movies = movies.OrderBy(i => i.Durada);
+                    break;
+                case "durada_desc":
+                    movies = movies.OrderByDescending(i => i.Durada);
+                    break;
+                default:
+                    movies = movies.OrderBy(i => i.ID);
+                    break;
+            }
+
+            List<MovieIndex> mv = new List<MovieIndex>();
+            List<Movie> moviesResult = movies.ToList();
+            for (int i = 0; i < moviesResult.Count(); i++)
+            {
+                var movieId = moviesResult[i].ID;
+                var copies = (from c in db.Copies where c.IDmovie == movieId select c).Count();
+                MovieIndex mindex = new MovieIndex
+                {
+                    ID = moviesResult[i].ID,
+                    IMDB = moviesResult[i].IMDB,
+                    Preu = moviesResult[i].Preu,
+                    Genere = moviesResult[i].Genere,
+                    Sinopsi = moviesResult[i].Sinopsi,
+                    Titol = moviesResult[i].Titol,
+                    Cartell = moviesResult[i].Cartell,
+                    DataEstrena = moviesResult[i].DataEstrena,
+                    Durada = moviesResult[i].Durada,
+                    numCopies = copies
+                };
+                mv.Add(mindex);
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            
+
+        }*/
+
+
         [HttpPost]
         public ActionResult DelCopies(int id)
         {

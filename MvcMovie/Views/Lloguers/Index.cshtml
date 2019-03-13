@@ -1,0 +1,59 @@
+﻿@model IEnumerable<MvcMovie.Models.Lloguer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.DataInici)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataFi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataReal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Perdut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amortitzat)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.DataInici)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataFi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataReal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Perdut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amortitzat)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IDlloguer }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IDlloguer }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IDlloguer })
+        </td>
+    </tr>
+}
+
+</table>

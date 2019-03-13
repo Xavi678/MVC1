@@ -106,15 +106,18 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.NIF }) |
                     <!-- @Html.ActionLink("Details", "Details", new { id = item.NIF }) |-->
-                    @Html.ActionLink("Delete", "Delete", new { id = item.NIF })
-                    @*  @using (Html.BeginForm("Delete", "Clients/", new { id = item.NIF }, FormMethod.Post, new { @class = "forma" }))
-                        {
-                            <input type="submit" value="Delete" class="boto" />
-                        }
+                    @Html.ActionLink("Delete", "Delete", new { id = item.NIF }) |
 
-                        @{
-                            string a = string.Format("{0}", item.NIF);
-                        }*@
+                    @Html.ActionLink("Lloguer","Create","Lloguers",new { client=item.NIF },null)
+                   
+                    @*  @using (Html.BeginForm("Delete", "Clients/", new { id = item.NIF }, FormMethod.Post, new { @class = "forma" }))
+        {
+            <input type="submit" value="Delete" class="boto" />
+        }
+
+        @{
+            string a = string.Format("{0}", item.NIF);
+        }*@
                     @*<a href="" onclick="return confirmacio('@a');">Delete</a>*@
                 </td>
             </tr>
