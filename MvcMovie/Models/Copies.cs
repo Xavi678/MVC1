@@ -14,10 +14,10 @@ namespace MvcMovie.Models
       
 
         [Key]
-        [Column(Order = 1)]
+        [Column(Order = 0)]
         public int IDmovie { set; get; }
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         public int numCopia { set; get; }
         public bool invalida { set; get; }
         public Motiu motiu { set; get; }

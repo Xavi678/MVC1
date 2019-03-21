@@ -19,8 +19,14 @@ namespace MvcMovie.Controllers
         public ActionResult Index()
         {
             //var lloguers = db.Lloguers.Include(l => l.Client).Include(l => l.Copies);
-            var lloguers = from l in db.Lloguers select l;
+            var lloguers = from l in db.Lloguers orderby l.DataInici descending select l ;
             return View(lloguers.ToList());
+        }
+
+        public ActionResult UpdateValues(int id)
+        {
+
+            return RedirectToAction("Create", id);
         }
 
         // GET: Lloguers/Details/5
@@ -39,7 +45,7 @@ namespace MvcMovie.Controllers
         }
 
         // GET: Lloguers/Create
-        public ActionResult Create(int? movie, int? copia, string client)
+        public ActionResult Create(int? movie, int? copia, string client, int? lloguer)
         {
             ViewBag.movie = movie;
             ViewBag.copies = copia;
@@ -53,16 +59,27 @@ namespace MvcMovie.Controllers
             ViewBag.llistaCopies = copies;
             ViewBag.llistaClients = clients;*/
 
-            ViewBag.llistaMovies = new SelectList(db.Movies.Select(m => new { m.ID, m.Titol}));
-            
-            ViewBag.llistaClients = new SelectList(db.Clients.Select(l => new SelectListItem { Value=l.NIF, Text=l.Nom }),"Value","Text");
-            ViewBag.llistaCopies = new SelectList(db.Copies.Select(c=> new { c.IDmovie ,c.numCopia}));
+            ViewBag.llistaMovies = new SelectList(db.Movies.Select(m => new SelectListItem { Value = m.ID.ToString(), Text = m.Titol }), "Value", "Text");
 
+            ViewBag.llistaClients = new SelectList(db.Clients.Select(l => new SelectListItem { Value = l.NIF, Text = l.Nom }), "Value", "Text");
+            if(movie!=null && copia == null)
+            {
+                ViewBag.llistaCopies = new SelectList(db.Copies.Where(c => c.IDmovie == movie).Select(c => new SelectListItem { Value = c.numCopia.ToString(), Text = c.numCopia.ToString() }), "Value", "Text");
+            }else if (lloguer != null) { 
+            ViewBag.llistaCopies = new SelectList(db.Copies.Where(c => c.IDmovie == lloguer).Select(c => new SelectListItem { Value = c.numCopia.ToString(), Text = c.numCopia.ToString() }), "Value", "Text");
+            }
+            else
+            {
+                
+                ViewBag.llistaCopies = new SelectList(db.Copies.Where(c => c.IDmovie == 1).Select(c => new SelectListItem { Value = c.numCopia.ToString(), Text = c.numCopia.ToString() }), "Value", "Text");
+            }
+            
+            Lloguer lloguerr = new Lloguer(movie.GetValueOrDefault(),copia.GetValueOrDefault(),client,DateTime.Now,DateTime.Today.AddDays(7));
  
             //var copies = db.Copies.Where(c => c.IDmovie == id).Select(c => c).ToList().LastOrDefault();
             //ViewBag.ClientID = new SelectList(db.Clients, "NIF", "Nom");
             //ViewBag.IDcopies = new SelectList(db.Copies, "IDmovie", "eMotiu");
-            return View();
+            return View(lloguerr);
         }
 
         // POST: Lloguers/Create
@@ -70,13 +87,22 @@ namespace MvcMovie.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDlloguer,IDcopies,numCopia,ClientID,DataInici,DataFi,DataReal,Perdut,Amortitzat")] Lloguer lloguer)
+        public ActionResult Create([Bind(Include = "IDlloguer,IDcopies,numCopia,ClientID,DataInici,DataFi,DataReal,Perdut,Amortitzat")] Lloguer lloguer,int? v)
         {
-            if (ModelState.IsValid)
+            if (v == 0)
             {
-                db.Lloguers.Add(lloguer);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+
+                Create(null,null, null, lloguer.IDcopies);
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Lloguers.Add(lloguer);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
 
             //ViewBag.ClientID = new SelectList(db.Clients, "NIF", "Nom", lloguer.ClientID);

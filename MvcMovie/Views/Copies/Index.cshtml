@@ -68,6 +68,9 @@
 
 
         </td>
+        <td>
+            @Html.ActionLink("Lloguers", "Create", "Lloguers", new { movie = item.IDmovie, copia=item.numCopia}, new { @class = "navbar-brand" }) |
+        </td>
         @* <td>
         @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |

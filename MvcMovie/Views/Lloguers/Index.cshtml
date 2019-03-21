@@ -11,7 +11,18 @@
 </p>
 <table class="table">
     <tr>
-      
+        <th>
+           Pel·lícula
+        </th>
+
+        <th>
+           Copia
+        </th>
+
+        <th>
+          Client
+        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.DataInici)
         </th>
@@ -32,7 +43,16 @@
 
 @foreach (var item in Model) {
     <tr>
-        
+        <td>
+            @Html.DisplayFor(modelItem => item.IDcopies)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.numCopia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClientID)
+        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.DataInici)
         </td>
@@ -49,9 +69,9 @@
             @Html.DisplayFor(modelItem => item.Amortitzat)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IDlloguer }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IDlloguer }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IDlloguer })
+            @Html.ActionLink("Edit", "Edit", new { id = item.IDlloguer }) |
+            @Html.ActionLink("Details", "Details", new { id = item.IDlloguer }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.IDlloguer })
         </td>
     </tr>
 }

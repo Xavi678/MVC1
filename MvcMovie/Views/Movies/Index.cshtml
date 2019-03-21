@@ -83,16 +83,17 @@
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+                @Html.ActionLink("Lloguers", "Create", "Lloguers", new { movie=item.ID}, new { @class = "navbar-brand" }) |
                 @using (Html.BeginForm("DelCopies", "Movies", new { id = item.ID }, FormMethod.Post))
                 {
-                  
+
                     <input type="submit" value="BorrarCopies" />
 
-                   
+
                 }
 
-              
-                
+
+
 
             </td>
             <td>

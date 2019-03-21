@@ -74,6 +74,10 @@
             @Html.DisplayFor(model => model.Sinopsi)
         </dd>
 
+        <dd>
+            @Html.ActionLink("Lloguers", "Create", "Lloguers", new { movie = Model.ID }, new { @class = "navbar-brand" }) |
+        </dd>
+
     </dl>
 </div>
 <p>

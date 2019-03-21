@@ -8,6 +8,7 @@
 
 @using (Html.BeginForm()) 
 {
+    
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
@@ -16,24 +17,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.numCopia, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @* @Html.EditorFor(model => model.ClientID, new { htmlAttributes = new { @class = "form-control",
-                  } })
-                @Html.ValidationMessageFor(model => model.ClientID, "", new { @class = "text-danger" })*@
-            @if (ViewBag.copia == null)
-            {
-                @Html.DropDownList("Clients", (IEnumerable<SelectListItem>)ViewBag.llistaCopies, null, new { @class = "form-control" })
-            }
-            else
-            {
-                @Html.EditorFor(model => model.numCopia, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.copia, @disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.numCopia, "", new { @class = "text-danger" })
 
-            }
-        </div>
-    </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.IDcopies, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -43,12 +27,35 @@
                 @Html.ValidationMessageFor(model => model.ClientID, "", new { @class = "text-danger" })*@
             @if (ViewBag.movie == null)
             {
-                @Html.DropDownList("Clients", (IEnumerable<SelectListItem>)ViewBag.llistaMovies, null, new { @class = "form-control" })
+                using (Html.BeginForm("UpdateValues", "Copies"))
+                {
+                    @Html.DropDownListFor(model => model.IDcopies, (IEnumerable<SelectListItem>)ViewBag.llistaMovies, new { onchange = "canviar();this.form.submit();" })
+                }
             }
             else
             {
-                @Html.EditorFor(model => model.IDcopies, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.movie, @disabled = "disabled" } })
+                @Html.EditorFor(model => model.IDcopies, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.IDcopies, "", new { @class = "text-danger" })
+
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.numCopia, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @* @Html.EditorFor(model => model.ClientID, new { htmlAttributes = new { @class = "form-control",
+                  } })
+                @Html.ValidationMessageFor(model => model.ClientID, "", new { @class = "text-danger" })*@
+            @if (ViewBag.copies == null)
+            {
+                @Html.DropDownListFor(model => model.numCopia, (IEnumerable<SelectListItem>)ViewBag.llistaCopies, null, new { @class = "form-control" })
+            }
+            else
+            {
+
+                @Html.EditorFor(model => model.numCopia, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.numCopia, "", new { @class = "text-danger" })
 
             }
         </div>
@@ -62,11 +69,11 @@
                 @Html.ValidationMessageFor(model => model.ClientID, "", new { @class = "text-danger" })*@
             @if (ViewBag.client == null)
             {
-                @Html.DropDownList("Clients", (IEnumerable<SelectListItem>)ViewBag.llistaClients, null, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.ClientID, (IEnumerable<SelectListItem>)ViewBag.llistaClients, null, new { @class = "form-control" })
             }
             else
             {
-                @Html.EditorFor(model => model.ClientID, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.client, @disabled = "disabled" } })
+                @Html.EditorFor(model => model.ClientID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.ClientID, "", new { @class = "text-danger" })
 
             }
@@ -77,7 +84,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.DataInici, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DataInici, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.DataInici, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
             @Html.ValidationMessageFor(model => model.DataInici, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -89,35 +96,35 @@
             @Html.ValidationMessageFor(model => model.DataFi, "", new { @class = "text-danger" })
         </div>
     </div>
+    @*
+           <div class="form-group">
+               @Html.LabelFor(model => model.DataReal, htmlAttributes: new { @class = "control-label col-md-2" })
+               <div class="col-md-10">
+                   @Html.EditorFor(model => model.DataReal, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                   @Html.ValidationMessageFor(model => model.DataReal, "", new { @class = "text-danger" })
+               </div>
+           </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DataReal, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DataReal, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DataReal, "", new { @class = "text-danger" })
-        </div>
-    </div>
+        <div class="form-group">
+                   @Html.LabelFor(model => model.Perdut, htmlAttributes: new { @class = "control-label col-md-2" })
+                   <div class="col-md-10">
+                       <div class="checkbox">
+                           @Html.EditorFor(model => model.Perdut)
+                           @Html.ValidationMessageFor(model => model.Perdut, "", new { @class = "text-danger" })
+                       </div>
+                   </div>
+               </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Perdut, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.Perdut)
-                @Html.ValidationMessageFor(model => model.Perdut, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Amortitzat, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.Amortitzat)
-                @Html.ValidationMessageFor(model => model.Amortitzat, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
+               <div class="form-group">
+                   @Html.LabelFor(model => model.Amortitzat, htmlAttributes: new { @class = "control-label col-md-2" })
+                   <div class="col-md-10">
+                       <div class="checkbox">
+                           @Html.EditorFor(model => model.Amortitzat)
+                           @Html.ValidationMessageFor(model => model.Amortitzat, "", new { @class = "text-danger" })
+                       </div>
+                   </div>
+               </div>*@
+    <input type="hidden" id="secret" value="1" name="v" />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-default" />
@@ -129,3 +136,11 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+
+    function canviar() {
+        document.getElementById("secret").value = "0";
+    }
+
+</script>
